@@ -1,0 +1,7 @@
+{
+    "MONGO_URI": "mongodb+srv://shreha:IGCklppzTS1RbCNg@cluster0.wxd6t.mongodb.net/DevConnector?retryWrites=true&w=majority",
+    "JWT_SECRET_KEY": "supersecretkey",
+    "githubClientId": "bec316e75a80563ec9dc",
+    "githubSecret": "c2dd45af8d44071cd04853245fba58400182c8bd",
+    "githubAccessToken": "deaf0466b8e4de5da31d2e5debbb3fde446df3a5"
+}
