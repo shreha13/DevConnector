@@ -242,13 +242,19 @@ exports.EditExperience = async (req, res, next) => {
       (i) => i.id == req.params.experienceId
     );
 
-    (experience = experienceData), (experience._id = req.params.experienceId);
+    if (experienceInd === -1)
+      return res.status(404).json({ msg: "Experience not found" });
 
-    profile.experience[experienceInd] = experience;
+    experienceData._id = req.params.experienceId;
+
+    profile.experience[experienceInd] = experienceData;
     await profile.save();
 
     return res.json({ profile });
   } catch (err) {
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Experience not found" });
+    }
     return res.status(400).json({ errors: err.message });
   }
 };
@@ -295,13 +301,19 @@ exports.EditEducation = async (req, res, next) => {
       (i) => i.id == req.params.educationId
     );
 
-    (education = educationData), (education._id = req.params.educationId);
+    if (educationInd === -1)
+      return res.status(404).json({ msg: "Education not found" });
 
-    profile.education[educationInd] = education;
+    educationData._id = req.params.educationId;
+
+    profile.education[educationInd] = educationData;
     await profile.save();
 
     return res.json({ profile });
   } catch (err) {
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Education not found" });
+    }
     return res.status(400).json({ errors: err.message });
   }
 };
@@ -344,6 +356,9 @@ exports.DeleteProfile = async (req, res, next) => {
 
     return res.status(301).json({ msg: "User deleted" });
   } catch (err) {
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "User not found" });
+    }
     return res.status(400).json({ errors: err.message });
   }
 };
@@ -357,11 +372,17 @@ exports.DeleteExperience = async (req, res, next) => {
       .map((i) => i.id)
       .indexOf(experienceId);
 
-    if (removeIndex !== -1) profile.experience.splice(removeIndex, 1);
+    if (removeIndex === -1)
+      return res.status(404).json({ msg: "Experience not found" });
+
+    profile.experience.splice(removeIndex, 1);
     await profile.save();
 
     return res.status(301).json({ profile });
   } catch (err) {
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Experience not found" });
+    }
     return res.status(400).json({ errors: err.message });
   }
 };
@@ -373,11 +394,17 @@ exports.DeleteEducation = async (req, res, next) => {
     const profile = await Profile.findOne({ user: userId });
     const removeIndex = profile.education.map((i) => i.id).indexOf(educationId);
 
-    if (removeIndex !== -1) profile.education.splice(removeIndex, 1);
+    if (removeIndex === -1)
+      return res.status(404).json({ msg: "Education not found" });
+
+    profile.education.splice(removeIndex, 1);
     await profile.save();
 
     return res.status(301).json({ profile });
   } catch (err) {
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Education not found" });
+    }
     return res.status(400).json({ errors: err.message });
   }
 };
@@ -387,7 +414,9 @@ exports.GetGithubRepo = (req, res, next) => {
     const options = {
       uri: `https://api.github.com/users/${
         req.params.username
-      }/repos?per_page=5&sort=created:asc&access_token=${config.get('githubAccessToken')}`,
+      }/repos?per_page=5&sort=created:asc&access_token=${config.get(
+        "githubAccessToken"
+      )}`,
       method: "GET",
       headers: { "user-agent": "node.js" },
     };
@@ -397,7 +426,7 @@ exports.GetGithubRepo = (req, res, next) => {
         return res.status(400).json({ msg: error });
       }
       if (response.statusCode != 200) {
-        return res.status(400).json({ msg: 'Github profile not found' });
+        return res.status(400).json({ msg: "Github profile not found" });
       }
       return res.json(JSON.parse(body));
     });
