@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAlert } from "../../actions/alert";
+import { register } from "../../actions/auth";
 import PropTypes from "prop-types";
 
 const Register = (props) => {
@@ -23,26 +24,7 @@ const Register = (props) => {
     if (password !== password2) {
       props.setAlert("Password do not match!", "danger");
     } else {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const newUser = {
-        name,
-        email,
-        password,
-      };
-
-      const body = JSON.stringify(newUser);
-
-      try {
-        const res = await axios.post("/api/users", body, config);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err.response.data);
-      }
+      props.register({ name, email, password });
     }
   };
 
@@ -112,7 +94,8 @@ const Register = (props) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
 };
 
 //setalert is from props
-export default connect(null, { setAlert })(Register);
+export default connect(null, { setAlert, register })(Register);
