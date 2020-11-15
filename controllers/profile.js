@@ -82,7 +82,7 @@ exports.EditProfile = async (req, res, next) => {
     await profile.save();
     return res.json({ profile });
   } catch (err) {
-    return res.status(400).json({ errors: err.message });
+    return res.status(500).json({ errors: err.message });
   }
 };
 
@@ -192,18 +192,6 @@ exports.GetProfileByUserId = async (req, res, next) => {
     if (err.kind == "ObjectId") {
       return res.status(404).json({ msg: "No profile found." });
     }
-    return res.status(400).json({ errors: err.message });
-  }
-};
-
-exports.DeleteProfile = async (req, res, next) => {
-  const userId = req.userId;
-  try {
-    await Profile.findOneAndRemove({ user: userId });
-    await User.findOneAndRemove({ _id: userId });
-
-    return res.status(301).json({ msg: "User deleted" });
-  } catch (err) {
     return res.status(400).json({ errors: err.message });
   }
 };
@@ -426,7 +414,7 @@ exports.GetGithubRepo = (req, res, next) => {
         return res.status(400).json({ msg: error });
       }
       if (response.statusCode != 200) {
-        return res.status(400).json({ msg: "Github profile not found" });
+        return res.status(404).json({ msg: "Github profile not found" });
       }
       return res.json(JSON.parse(body));
     });

@@ -11,10 +11,10 @@ const app = express();
 
 app.use(express.json({ extended: false }));
 
-app.get("/", (req, res, next) => {
-  console.log("API Running");
-  next();
-});
+// app.get("/", (req, res, next) => {
+//   console.log("API Running");
+//   next();
+// });
 
 app.use("/api/users", users);
 app.use("/api/auth", auth);

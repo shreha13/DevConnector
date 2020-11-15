@@ -24,7 +24,7 @@ exports.RegisterUser = async (req, res, next) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(500).json({ errors: [{ msg: "User already exists" }] });
+      return res.status(400).json({ errors: [{ msg: "User already exists" }] });
     } else {
       const avatar = gravatar.url(email, {
         s: "200",
@@ -46,7 +46,7 @@ exports.RegisterUser = async (req, res, next) => {
       jwt.sign(
         {
           id: user.id,
-        },  
+        },
         jwtSecretKey,
         {
           expiresIn: "10000h",
@@ -89,14 +89,18 @@ exports.Login = async (req, res, next) => {
   }
 
   const { email, password } = req.body;
-  try { 
+  try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({errors: [{ msg: "Wrong email or password." }]});
+      return res
+        .status(404)
+        .json({ errors: [{ msg: "Wrong email or password." }] });
     }
     const isPwdEqual = await bcrypt.compare(password, user.password);
     if (!isPwdEqual) {
-      return res.status(403).json({errors: [{ msg: "Wrong email or password." }]});
+      return res
+        .status(403)
+        .json({ errors: [{ msg: "Wrong email or password." }] });
     }
 
     jwt.sign(
