@@ -23,3 +23,13 @@ export const GET_REPOS = "GET_REPOS";
 export const CREATE_PROFILE_SUCCESS = "CREATE_PROFILE_SUCCESS";
 export const CREATE_PROFILE_START = "CREATE_PROFILE_START";
 export const CREATE_PROFILE_FAIL = "CREATE_PROFILE_FAIL";
+
+export const GET_POSTS = "GET_POSTS";
+export const GET_POST = "GET_POST";
+export const POST_ERROR = "POST_ERROR";
+export const GET_POST_START = "GET_POST_START";
+export const UPDATE_LIKE = "UPDATE_LIKE";
+export const DELETE_POST = "DELETE_POST";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+export const CREATE_POST = "CREATE_POST";
+export const CREATE_COMMENT = "CREATE_COMMENT";

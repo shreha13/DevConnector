@@ -20,6 +20,7 @@ import EditProfile from "./components/profile-forms/EditProfile";
 import AddEducation from "./components/profile-forms/AddEducation";
 import AddExperience from "./components/profile-forms/AddExperience";
 import Posts from "./components/posts/Posts";
+import Post from "./components/posts/Post";
 
 const token = localStorage.getItem("token");
 if (token) {
@@ -68,6 +69,11 @@ const App = () => {
                 exact
                 path="/posts"
                 component={Posts}
+              /> 
+              <PrivateRoute
+                exact
+                path="/post/:id"
+                component={Post}
               />
             </Switch>
           </section>

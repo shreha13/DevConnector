@@ -81,7 +81,7 @@ exports.DeletePost = async (req, res, next) => {
         .json({ msg: "You are not authenticated to delete this post." });
     }
     await post.remove();
-    return res.status(301).json({ msg: "Post deleted" });
+    return res.status(200).json({ msg: "Post deleted" });
   } catch (err) {
     if (err.kind === "ObjectId") {
       return res.status(404).json({ msg: "Post not found" });

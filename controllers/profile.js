@@ -390,7 +390,7 @@ exports.DeleteEducation = async (req, res, next) => {
     profile.education.splice(removeIndex, 1);
     await profile.save();
 
-    return res.status(301).json({ profile });
+    return res.status(200).json({ profile });
   } catch (err) {
     if (err.kind === "ObjectId") {
       return res.status(404).json({ msg: "Education not found" });
