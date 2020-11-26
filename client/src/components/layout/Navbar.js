@@ -25,12 +25,23 @@ const Navbar = (props) => {
 
   if (props.isAuthenticated) {
     authBar = (
-      <li>
-        <Link to="/" onClick={logoutUser}>
-          <i className="fa fa-sign-out"></i>{" "}
-          <span className="hide-sm">Logout</span>
-        </Link>
-      </li>
+      <Fragment>
+        <li>
+          <Link to="/profiles">Developers</Link>
+        </li>
+        <li>
+          <Link to="/dashboard">
+            <i className="fa fa-user"></i>{" "}
+            <span className="hide-sm">Dashboard</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/" onClick={logoutUser}>
+            <i className="fa fa-sign-out"></i>{" "}
+            <span className="hide-sm">Logout</span>
+          </Link>
+        </li>
+      </Fragment>
     );
   }
 

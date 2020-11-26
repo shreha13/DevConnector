@@ -39,7 +39,6 @@ export default function (state = initialState, { type, payload }) {
         user: null,
       };
     case USER_LOADED:
-      debugger;
       return {
         ...state,
         isAuthenticated: true,

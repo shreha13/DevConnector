@@ -4,6 +4,7 @@ const request = require("request");
 
 const Profile = require("../models/Profile");
 const User = require("../models/User");
+const Post = require("../models/Post");
 
 exports.GetProfile = async (req, res, next) => {
   try {
@@ -18,7 +19,7 @@ exports.GetProfile = async (req, res, next) => {
     }
     return res.status(200).json({ profile });
   } catch (err) {
-    return res.status(400).json({ errors: err.message });
+    return res.status(400).json({ msg: err.message });
   }
 };
 
@@ -43,7 +44,7 @@ exports.EditProfile = async (req, res, next) => {
     youtube,
     instagram,
     twitter,
-    linekdin,
+    linkedin,
     facebook,
   } = req.body;
 
@@ -54,14 +55,14 @@ exports.EditProfile = async (req, res, next) => {
 
   if (company) profileData.company = company;
   if (website) profileData.website = website;
-  if (location) profileData.lolocation = location;
+  if (location) profileData.location = location;
   if (bio) profileData.bio = bio;
   if (githubusername) profileData.githubusername = githubusername;
 
   profileData.social = {};
 
   if (facebook) profileData.social.facebook = facebook;
-  if (linekdin) profileData.social.linekdin = linekdin;
+  if (linkedin) profileData.social.linkedin = linkedin;
   if (instagram) profileData.social.instagram = instagram;
   if (twitter) profileData.social.twitter = twitter;
   if (youtube) profileData.social.youtube = youtube;
@@ -339,6 +340,7 @@ exports.GetProfileByUserId = async (req, res, next) => {
 exports.DeleteProfile = async (req, res, next) => {
   const userId = req.userId;
   try {
+    await Post.deleteMany({ user: userId });
     await Profile.findOneAndRemove({ user: userId });
     await User.findOneAndRemove({ _id: userId });
 
@@ -379,7 +381,7 @@ exports.DeleteEducation = async (req, res, next) => {
   const userId = req.userId;
   const educationId = req.params.educationId;
   try {
-    const profile = await Profile.findOne({ user: userId });
+    const profile = await Profile.findOne({ user: userId }); 
     const removeIndex = profile.education.map((i) => i.id).indexOf(educationId);
 
     if (removeIndex === -1)
@@ -402,9 +404,7 @@ exports.GetGithubRepo = (req, res, next) => {
     const options = {
       uri: `https://api.github.com/users/${
         req.params.username
-      }/repos?per_page=5&sort=created:asc&access_token=${config.get(
-        "githubAccessToken"
-      )}`,
+      }/repos?per_page=5&sort=created:asc`,
       method: "GET",
       headers: { "user-agent": "node.js" },
     };

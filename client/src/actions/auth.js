@@ -8,6 +8,7 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
+  CLEAR_PROFILE,
 } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 
@@ -84,7 +85,6 @@ export const register = (name, email, password) => {
       dispatch(loadUser());
     } catch (err) {
       const errors = err.response.data.errors;
-      debugger;
 
       if (errors) {
         errors.forEach((error) => {
@@ -99,9 +99,12 @@ export const register = (name, email, password) => {
 };
 
 export const logout = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: LOGOUT
-    })
-  }
-}
+      type: CLEAR_PROFILE,
+    });
+    dispatch({
+      type: LOGOUT,
+    });
+  };
+};

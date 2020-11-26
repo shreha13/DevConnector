@@ -109,6 +109,6 @@ router.delete("/education/:educationId", authMiddleware, profileController.Delet
 //@route    /api/profile/github/:username
 //@desc     Delete user, profile, post
 //@access   Private
-router.get("/github/:username", authMiddleware, profileController.GetGithubRepo);
+router.get("/github/:username", profileController.GetGithubRepo);
 
 module.exports = router;
