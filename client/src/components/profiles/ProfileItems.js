@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ProfileItems = (props) => {
-  debugger;
   return (
     <div className="profile bg-light">
       <img src={props.profile.user.avatar} className="round-img" />

@@ -46,7 +46,6 @@ const CreateProfile = (props) => {
     setFormData(data);
   };
 
-  debugger;
   const onFormSubmit = (e) => {
     e.preventDefault();
     props.createProfile(formData, props.history);

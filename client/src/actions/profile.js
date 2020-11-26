@@ -73,14 +73,12 @@ export const getGitRepo = (username) => {
     try {
       const res = await axios.get("/api/profile/github/" + username);
 
-      debugger;
       const repos = res.data;
       dispatch({
         type: GET_REPOS,
         payload: repos,
       });
     } catch (err) {
-      debugger;
       const msg = err.response.data.msg;
       dispatch({
         type: PROFILE_ERROR,
@@ -111,7 +109,6 @@ export const createProfile = (profileData, history, edit = false) => {
         type: CREATE_PROFILE_SUCCESS,
         payload: profile,
       });
-      debugger;
       if (!edit) {
         history.push("/dashboard");
       }
@@ -151,7 +148,6 @@ export const addExperience = (experienceData, history) => {
         type: UPDATE_PROFILE,
         payload: profile,
       });
-      debugger;
 
       history.push("/dashboard");
     } catch (err) {
@@ -183,7 +179,6 @@ export const addEducation = (educationData, history) => {
         type: CREATE_PROFILE_START,
       });
       const res = await axios.put("/api/profile/education", body, config);
-      debugger;
 
       const profile = res.data.profile;
 
@@ -191,12 +186,10 @@ export const addEducation = (educationData, history) => {
         type: UPDATE_PROFILE,
         payload: profile,
       });
-      debugger;
 
       history.push("/dashboard");
     } catch (err) {
       const errors = err.response.data.errors;
-      debugger;
       if (errors) {
         errors.forEach((error) => {
           dispatch(setAlert(error, "danger"));
@@ -210,8 +203,6 @@ export const addEducation = (educationData, history) => {
 };
 
 export const deleteEducation = (educationId) => {
-  debugger;
-
   return async (dispatch) => {
     if (window.confirm("Your education will be deleted permanently")) {
       try {
@@ -219,7 +210,6 @@ export const deleteEducation = (educationId) => {
           type: CREATE_PROFILE_START,
         });
         const res = await axios.delete(`/api/profile/education/${educationId}`);
-        debugger;
 
         const profile = res.data.profile;
 
@@ -248,9 +238,7 @@ export const deleteExperience = (experienceId) => {
       dispatch({
         type: CREATE_PROFILE_START,
       });
-      debugger;
       const res = await axios.delete(`/api/profile/experience/${experienceId}`);
-      debugger;
 
       const profile = res.data.profile;
 

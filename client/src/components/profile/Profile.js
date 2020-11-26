@@ -11,7 +11,6 @@ import ProfileTop from "./ProfileTop";
 
 const Profile = (props) => {
   useEffect(() => {
-    debugger;
     props.getProfileById(props.match.params.id);
   }, []);
   return (

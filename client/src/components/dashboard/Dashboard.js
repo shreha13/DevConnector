@@ -12,7 +12,6 @@ const Dashboard = (props) => {
   }, []);
 
   const { user } = props.auth;
-  debugger;
   const { profile, loading } = props.profile;
 
   let dashboardContent;

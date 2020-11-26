@@ -24,7 +24,6 @@ const reducers = (state = initialState, action) => {
     case GET_PROFILE:
     case CREATE_PROFILE_SUCCESS:
     case UPDATE_PROFILE:
-      debugger
       return {
         ...state,
         profile: payload,
