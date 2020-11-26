@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 
 const connectDB = require("./config/db");
 //routes
@@ -20,6 +21,12 @@ app.use("/api/users", users);
 app.use("/api/auth", auth);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+
+  app.get("*", path.resolve(__dirname, "client", "build", "index"));
+}
 
 const PORT = process.env.PORT || 5000;
 
